@@ -1,4 +1,4 @@
-package com.javatechie.spring.ws.api;
+package com.mainul35.chatapp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

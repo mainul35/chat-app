@@ -1,4 +1,4 @@
-package com.javatechie.spring.ws.api.config;
+package com.mainul35.chatapp.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
