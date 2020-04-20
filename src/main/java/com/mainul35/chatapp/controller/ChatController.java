@@ -28,6 +28,11 @@ public class ChatController {
 		return "index";
 	}
 
+	@GetMapping("/stream")
+	public String stream(Model model) {
+		return "streaming";
+	}
+
 /*	@MessageMapping("/chat.register")
 	@SendTo("/topic/public")
 	public ChatMessage register(@Payload ChatMessage chatMessage, SimpMessageHeaderAccessor headerAccessor) {
