@@ -49,6 +49,8 @@ public class ChatController {
 
 	@MessageMapping("/chat.send/{roomId}")
 	public void sendMessage(@DestinationVariable String roomId, @Payload ChatMessage chatMessage) {
+		// DB update
+		// RMQ msg template
 		simpMessagingTemplate.convertAndSend("/topic/"+roomId, chatMessage);
 	}
 

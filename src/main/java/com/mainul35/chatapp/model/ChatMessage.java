@@ -1,6 +1,8 @@
 package com.mainul35.chatapp.model;
 
-public class ChatMessage {
+import java.io.Serializable;
+
+public class ChatMessage implements Serializable {
 	private String content;
 	private String sender;
 	private MessageType type;
@@ -33,4 +35,12 @@ public class ChatMessage {
 		this.type = type;
 	}
 
+	@Override
+	public String toString() {
+		return "ChatMessage{" +
+				"content='" + content + '\'' +
+				", sender='" + sender + '\'' +
+				", type=" + type +
+				'}';
+	}
 }
