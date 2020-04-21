@@ -36,10 +36,10 @@ function onConnected() {
     // Subscribe to the Public Topic
     let roomId = document.querySelector('[name=roomId]').value;
     console.log(roomId);
-    stompClient.subscribe('/topic/'+roomId, onMessageReceived);
+    stompClient.subscribe('/topic/chat', onMessageReceived);
 
     // Tell your username to the server
-    stompClient.send("/app/chat.register/"+roomId,
+    stompClient.send("/chat.register/chat",
         {},
         JSON.stringify({sender: username, type: 'JOIN'})
     )
@@ -65,7 +65,7 @@ function send(event) {
             type: 'CHAT'
         };
 
-        stompClient.send("/app/chat.send/"+roomId, {}, JSON.stringify(chatMessage));
+        stompClient.send("/chat.send/chat", {}, JSON.stringify(chatMessage));
         messageInput.value = '';
     }
     event.preventDefault();

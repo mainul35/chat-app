@@ -40,10 +40,10 @@ public class ChatController {
 		return chatMessage;
 	}*/
 
-	@MessageMapping("/chat.register/{roomId}")
-	public void register(@DestinationVariable String roomId, @Payload ChatMessage chatMessage, SimpMessageHeaderAccessor headerAccessor) {
+	@MessageMapping("/chat.register/chat")
+	public void register(/*@DestinationVariable String roomId, */@Payload ChatMessage chatMessage, SimpMessageHeaderAccessor headerAccessor) {
 		headerAccessor.getSessionAttributes().put("username", chatMessage.getSender());
-		simpMessagingTemplate.convertAndSend("/topic/"+roomId, chatMessage);
+		simpMessagingTemplate.convertAndSend("/topic/chat", chatMessage);
 	}
 
 	/*@MessageMapping("/chat.send")
@@ -52,11 +52,11 @@ public class ChatController {
 		return chatMessage;
 	}*/
 
-	@MessageMapping("/chat.send/{roomId}")
-	public void sendMessage(@DestinationVariable String roomId, @Payload ChatMessage chatMessage) {
+	@MessageMapping("/chat.send/chat")
+	public void sendMessage(/*@DestinationVariable String roomId,*/ @Payload ChatMessage chatMessage) {
 		// DB update
 		// RMQ msg template
-		simpMessagingTemplate.convertAndSend("/topic/"+roomId, chatMessage);
+		simpMessagingTemplate.convertAndSend("/topic/chat", chatMessage);
 	}
 
 }
