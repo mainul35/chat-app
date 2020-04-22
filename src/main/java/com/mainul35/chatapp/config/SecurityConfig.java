@@ -1,8 +1,9 @@
 package com.mainul35.chatapp.config;
 
-import com.mainul35.chatapp.service.CustomAuthProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -22,16 +23,17 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
             "/js/**",
             "/css/**",
             "/img/**",
+            "/fonts/**",
             "/endpoint/**",
             "/chat.**",
             "/topic/**",
             "/temp/**"
     };
 
-    private final CustomAuthProvider customAuthProvider;
+    private final AuthenticationProvider customAuthProvider;
     private final AuthenticationSuccessHandler authenticationSuccessHandler;
 
-    public SecurityConfig(CustomAuthProvider customAuthProvider, AuthenticationSuccessHandler authenticationSuccessHandler) {
+    public SecurityConfig(AuthenticationProvider customAuthProvider, AuthenticationSuccessHandler authenticationSuccessHandler) {
         this.customAuthProvider = customAuthProvider;
         this.authenticationSuccessHandler = authenticationSuccessHandler;
     }

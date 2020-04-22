@@ -1,5 +1,7 @@
 package com.mainul35.chatapp.service.auth;
 
+import com.mainul35.chatapp.entity.security.AuthUser;
+import com.mainul35.chatapp.exception.UserNotActiveException;
 import com.mainul35.chatapp.exception.UserNotFoundException;
 import com.mainul35.chatapp.repository.AuthRepository;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,9 +18,15 @@ public class AuthService implements UserDetailsService {
         this.authRepository = authRepository;
     }
 
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        var authUser = authRepository.findByUsername(username)
-                .orElseThrow(() -> new UserNotFoundException("no.user.found.with.this.username"));
-        return authUser;
+    @Override
+    public UserDetails loadUserByUsername(String username) {
+        var userOptional = authRepository.findByEmailIgnoreCase(username);
+        userOptional = userOptional.isPresent() ? userOptional : authRepository.findByUsernameIgnoreCase(username);
+        var user = userOptional.orElseThrow(() -> new UserNotFoundException("no.user.found.with.this.username"));
+        if (user.isEnabled()) {
+            return user;
+        }
+        //TODO: Add localization code
+        throw  new UserNotActiveException("user.not.active");
     }
 }

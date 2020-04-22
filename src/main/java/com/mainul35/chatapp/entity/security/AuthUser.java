@@ -1,47 +1,40 @@
 package com.mainul35.chatapp.entity.security;
 
 
+import com.mainul35.chatapp.entity.BaseId;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-@Entity
-@Table(name = "user_auth_details")
-public class AuthUser implements UserDetails, Serializable {
+@Entity(name = "user_auth_details")
+public class AuthUser extends BaseId implements UserDetails, Serializable {
 
 	private static final long serialVersionUID = 3581290407206583877L;
-	@GeneratedValue
-	@Id
-    @Column(name = "id")
-	private Long id;
+
     @Column(name = "name", length = 200, nullable = false)
 	private String name;
     @Column(name = "phone", length = 30)
     private String phone;
     @Column(name = "email", length = 200, unique = true, nullable = false)
     private String email;
-    @Column(name = "username", length = 200, unique = true, updatable = false)
+    @Column(name = "username", length = 200, unique = true, updatable = true)
 	private String username;
     @Column(name = "password", length = 200, nullable = false)
 	private String password;
 
-    @ManyToMany(cascade= CascadeType.ALL,fetch= FetchType.EAGER)
-    @JoinTable(name="user_authority",
-            joinColumns = {@JoinColumn(name="user_id", referencedColumnName="id")},
-            inverseJoinColumns = {@JoinColumn(name="role_id", referencedColumnName="id")}
-    )
-	private Set<Authority> roles;
-
-    @Column(name="created_on")
-	private Timestamp dateTime;
+    @Enumerated(EnumType.STRING)
+    @Column
+    private Role role;
 
     @Column(nullable = false, name = "enabled")
-	private boolean enabled;
+	private boolean enabled = true;
     @Column(nullable = false, name = "accountNonExpired")
 	private boolean accountNonExpired = true;
     @Column(nullable = false, name = "accountNonLocked")
@@ -50,12 +43,12 @@ public class AuthUser implements UserDetails, Serializable {
 	private boolean credentialsNonExpired = true;
 
     @Override
-    public List<Authority> getAuthorities() {
-        List<Authority> authorities = new ArrayList<>();
-        this.roles.forEach(authority->{
-        	roles.add(authority);
-        });
-    	return authorities;
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        final Role role = this.role;
+        var authority = (GrantedAuthority) () -> role.name();
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(authority);
+        return authorities;
     }
 
     @Override
@@ -92,24 +85,12 @@ public class AuthUser implements UserDetails, Serializable {
         return name;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public void setName(String name) {
         this.name = name;
     }
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public void setAuthorities(Set<Authority> authorities) {
-        this.roles = authorities;
     }
 
     public void setEnabled(boolean enabled) {
@@ -132,27 +113,23 @@ public class AuthUser implements UserDetails, Serializable {
         this.username = username;
     }
 
-	public Timestamp getDateTime() {
-		return dateTime;
-	}
+    public String getPhone() {
+        return phone;
+    }
 
-	public void setDateTime(Timestamp dateTime) {
-		this.dateTime = dateTime;
-	}
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
-	@Override
-	public String toString() {
-		return "AuthUser{" +
-				"id=" + id +
-				", name='" + name + '\'' +
-				", username='" + username + '\'' +
-				", password='" + password + '\'' +
-				", roles=" + roles +
-				", dateTime=" + dateTime +
-				", enabled=" + enabled +
-				", accountNonExpired=" + accountNonExpired +
-				", accountNonLocked=" + accountNonLocked +
-				", credentialsNonExpired=" + credentialsNonExpired +
-				'}';
-	}
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
 }
