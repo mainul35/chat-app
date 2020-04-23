@@ -18,9 +18,6 @@ public class AuthUser extends BaseId implements UserDetails, Serializable {
 
 	private static final long serialVersionUID = 3581290407206583877L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     @Column(name = "name", length = 200, nullable = false)
 	private String name;
     @Column(name = "phone", length = 30, unique = true)
@@ -37,7 +34,7 @@ public class AuthUser extends BaseId implements UserDetails, Serializable {
     private Role role;
 
     @Column(nullable = false, name = "enabled")
-	private boolean enabled = true;
+	private boolean enabled = false;
     @Column(nullable = false, name = "accountNonExpired")
 	private boolean accountNonExpired = true;
     @Column(nullable = false, name = "accountNonLocked")

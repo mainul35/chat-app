@@ -25,9 +25,6 @@ public class CustomAuthSuccessHandler implements AuthenticationSuccessHandler {
             HttpServletResponse httpServletResponse,
             Authentication authentication
     ) throws IOException, ServletException {
-        HttpSession session = httpServletRequest.getSession();
-        AuthUser authUser = (AuthUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
         //set our response to OK status
         httpServletResponse.setStatus(HttpServletResponse.SC_OK);
 

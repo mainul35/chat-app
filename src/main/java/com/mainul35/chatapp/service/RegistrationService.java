@@ -24,6 +24,7 @@ public class RegistrationService {
     public void registerUser(Registration registration) {
         var user = this.buildUser(registration);
         registrationRepository.save(user);
+        // Write email sending logic
     }
 
     private AuthUser buildUser(Registration registration) {

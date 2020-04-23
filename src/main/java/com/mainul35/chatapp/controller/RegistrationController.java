@@ -16,6 +16,11 @@ public class RegistrationController {
         model.addAttribute("registration", new Registration());
         return "register";
     }
+
+    @GetMapping("/email-sent")
+    public String emailSent() {
+        return "email_sent";
+    }
 }
 
 @RestController
