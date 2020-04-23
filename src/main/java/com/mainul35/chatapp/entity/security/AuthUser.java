@@ -18,13 +18,16 @@ public class AuthUser extends BaseId implements UserDetails, Serializable {
 
 	private static final long serialVersionUID = 3581290407206583877L;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     @Column(name = "name", length = 200, nullable = false)
 	private String name;
-    @Column(name = "phone", length = 30)
+    @Column(name = "phone", length = 30, unique = true)
     private String phone;
     @Column(name = "email", length = 200, unique = true, nullable = false)
     private String email;
-    @Column(name = "username", length = 200, unique = true, updatable = true)
+    @Column(name = "username", length = 200, unique = true)
 	private String username;
     @Column(name = "password", length = 200, nullable = false)
 	private String password;

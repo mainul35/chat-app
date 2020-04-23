@@ -1,10 +1,14 @@
 package com.mainul35.chatapp.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.OffsetDateTime;
 
-
+@Getter
+@Setter
 @MappedSuperclass
 public abstract class BaseId implements Serializable {
 
@@ -26,29 +30,5 @@ public abstract class BaseId implements Serializable {
     @PreUpdate
     protected void onUpdate() {
         updatedAt = OffsetDateTime.now();
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public OffsetDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(OffsetDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public OffsetDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(OffsetDateTime updatedAt) {
-        this.updatedAt = updatedAt;
     }
 }
