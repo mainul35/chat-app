@@ -113,7 +113,7 @@
     }
 
     function success(response) {
-        location.href = '/email-sent';
+        window.location.href = '/email-sent';
         console.log(response);
     }
 
