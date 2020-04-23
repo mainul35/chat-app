@@ -27,7 +27,7 @@ public class RegistrationService {
     }
 
     private AuthUser buildUser(Registration registration) {
-        var userOptional = registrationRepository.findByEmail(registration.getEmail());
+        var userOptional = registrationRepository.findByEmailIgnoreCase(registration.getEmail().trim());
         userOptional.ifPresent(authUser -> {
             throw new UserAlreadyRegisteredException("user.already.registered");
         });
