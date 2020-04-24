@@ -21,6 +21,7 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
             "/login",
             "/register",
             "/stream",
+            "/public/**",
             "/resources/**",
             "/js/**",
             "/css/**",

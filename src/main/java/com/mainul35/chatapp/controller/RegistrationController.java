@@ -17,7 +17,7 @@ public class RegistrationController {
         return "register";
     }
 
-    @GetMapping("/email-sent")
+    @GetMapping("/public/email-sent")
     public String emailSent() {
         return "email_sent";
     }
@@ -32,9 +32,9 @@ class RegistrationRestController {
         this.registrationService = registrationService;
     }
 
-    @PostMapping(value = "/register")
-    public ResponseEntity<?> registrationHandler(@RequestBody Registration registration) {
+    @PostMapping(value = "/register", produces = "application/json", consumes = "application/json")
+    public ResponseEntity<String> registrationHandler(@RequestBody Registration registration) {
         registrationService.registerUser(registration);
-        return new ResponseEntity<String>("Registered", HttpStatus.OK);
+        return new ResponseEntity<String>("Success", HttpStatus.OK);
     }
 }

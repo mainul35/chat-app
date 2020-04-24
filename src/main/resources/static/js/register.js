@@ -82,9 +82,9 @@
     regForm.find('.form-submit').on('click', function (e) {
         e.preventDefault();
         let registration = {
-            name: nameInput.val(),
-            email: emailInput.val(),
-            password: passwordInput.val()
+            'name': nameInput.val(),
+            'email': emailInput.val(),
+            'password': passwordInput.val()
         };
 
         if (!invalidName && !invalidEmail && !invalidPassword && !invalidRePassword) {
@@ -98,22 +98,20 @@
     });
 
     function submitForm (data) {
-        $.ajax({
+
+        fetch(regForm.attr('action'), {
+            method: 'POST',
             headers: {
-                'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            type: "POST",
-            url: regForm.attr('action'),
-            data: data,
-            success: success,
-            error: error,
-            dataType: 'application/json'
-        });
+            body: data
+        })
+            .then((resp) => resp.json())
+            .then(success).catch(error);
     }
 
     function success(response) {
-        window.location.href = '/email-sent';
+        window.location.href = '/public/email-sent';
         console.log(response);
     }
 
