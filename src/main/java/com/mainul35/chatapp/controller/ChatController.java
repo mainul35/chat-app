@@ -1,6 +1,5 @@
 package com.mainul35.chatapp.controller;
 
-import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
@@ -20,12 +19,6 @@ public class ChatController {
 
 	public ChatController(SimpMessagingTemplate messagingTemplate) {
 		this.simpMessagingTemplate = messagingTemplate;
-	}
-
-	@GetMapping("/")
-	public String root(Model model) {
-		model.addAttribute("roomId", UUID.randomUUID().toString());
-		return "index";
 	}
 
 	@GetMapping("/stream")
