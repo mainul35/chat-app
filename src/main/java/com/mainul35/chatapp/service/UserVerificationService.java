@@ -16,11 +16,13 @@ import java.util.concurrent.ThreadLocalRandom;
 @Service
 public class UserVerificationService {
 
-    @Autowired
-    private UserVerificationRepository userVerificationRepository;
+    private final JavaMailSender mailSender;
+    private final UserVerificationRepository userVerificationRepository;
 
-    @Autowired
-    private JavaMailSender mailSender;
+    public UserVerificationService(JavaMailSender mailSender, UserVerificationRepository userVerificationRepository) {
+        this.mailSender = mailSender;
+        this.userVerificationRepository = userVerificationRepository;
+    }
 
     public void sendRandomCodeToEmail(AuthUser user) {
         // TODO: use Builder Pattern

@@ -6,7 +6,6 @@ import com.mainul35.chatapp.exception.UserAlreadyRegisteredException;
 import com.mainul35.chatapp.repository.RegistrationRepository;
 import com.mainul35.chatapp.viewmodel.Registration;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -17,12 +16,12 @@ public class RegistrationService {
 
     private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private UserVerificationService userVerificationService;
+    private final UserVerificationService userVerificationService;
 
-    public RegistrationService(RegistrationRepository registrationRepository, PasswordEncoder passwordEncoder) {
+    public RegistrationService(RegistrationRepository registrationRepository, PasswordEncoder passwordEncoder, UserVerificationService userVerificationService) {
         this.registrationRepository = registrationRepository;
         this.passwordEncoder = passwordEncoder;
+        this.userVerificationService = userVerificationService;
     }
 
     public void registerUser(Registration registration) {
