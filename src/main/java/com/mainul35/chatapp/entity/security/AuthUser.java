@@ -1,17 +1,18 @@
 package com.mainul35.chatapp.entity.security;
 
-
 import com.mainul35.chatapp.entity.BaseId;
+import com.mainul35.chatapp.entity.enums.Role;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 @Entity(name = "user_auth_details")
 public class AuthUser extends BaseId implements UserDetails, Serializable {

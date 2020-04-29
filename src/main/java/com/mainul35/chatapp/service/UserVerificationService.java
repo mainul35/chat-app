@@ -2,10 +2,9 @@ package com.mainul35.chatapp.service;
 
 import com.mainul35.chatapp.entity.security.AuthUser;
 import com.mainul35.chatapp.entity.verification.UserVerification;
-import com.mainul35.chatapp.entity.verification.VerificationGatewayType;
-import com.mainul35.chatapp.entity.verification.VerificationType;
+import com.mainul35.chatapp.entity.enums.VerificationGatewayType;
+import com.mainul35.chatapp.entity.enums.VerificationType;
 import com.mainul35.chatapp.repository.UserVerificationRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -25,15 +24,16 @@ public class UserVerificationService {
     }
 
     public void sendRandomCodeToEmail(AuthUser user) {
-        // TODO: use Builder Pattern
-        UserVerification verification = new UserVerification();
-        verification.setVerificationGatewayType(VerificationGatewayType.EMAIL);
-        verification.setVerificationCode(ThreadLocalRandom.current().nextInt(100000, 1000000));
-        verification.setValidityTime(LocalDateTime.now().plusDays(3));
-        verification.setGeneratedAt(LocalDateTime.now());
-        verification.setVerificationType(VerificationType.ACCOUNT_ACTIVATION);
-        verification.setUser(user);
+        UserVerification verification =
+                UserVerification.builder()
+                                .verificationGatewayType(VerificationGatewayType.EMAIL)
+                                .verificationCode(ThreadLocalRandom.current().nextInt(100000, 1000000))
+                                .validityTime(LocalDateTime.now().plusDays(3))
+                                .generatedAt(LocalDateTime.now())
+                                .verificationType(VerificationType.ACCOUNT_ACTIVATION)
+                                .user(user).build();
         UserVerification savedVerification = userVerificationRepository.save(verification);
+
         // TODO: use email template
         String text = "Your verification code: " + savedVerification.getVerificationCode();
         sendMail(user.getEmail(), "Verification Code", text);
