@@ -1,7 +1,7 @@
 package com.mainul35.chatapp.service;
 
 import com.mainul35.chatapp.entity.security.AuthUser;
-import com.mainul35.chatapp.entity.security.Role;
+import com.mainul35.chatapp.entity.enums.Role;
 import com.mainul35.chatapp.exception.UserAlreadyRegisteredException;
 import com.mainul35.chatapp.repository.RegistrationRepository;
 import com.mainul35.chatapp.viewmodel.Registration;
