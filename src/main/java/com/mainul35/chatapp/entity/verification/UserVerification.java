@@ -2,8 +2,8 @@ package com.mainul35.chatapp.entity.verification;
 
 import com.mainul35.chatapp.entity.BaseId;
 import com.mainul35.chatapp.entity.security.AuthUser;
-import com.mainul35.chatapp.entity.enums.VerificationGatewayType;
-import com.mainul35.chatapp.entity.enums.VerificationType;
+import com.mainul35.chatapp.enums.VerificationGatewayType;
+import com.mainul35.chatapp.enums.VerificationType;
 import lombok.Builder;
 import lombok.Getter;
 

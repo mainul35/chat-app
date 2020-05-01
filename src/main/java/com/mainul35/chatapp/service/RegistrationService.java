@@ -1,7 +1,7 @@
 package com.mainul35.chatapp.service;
 
 import com.mainul35.chatapp.entity.security.AuthUser;
-import com.mainul35.chatapp.entity.enums.Role;
+import com.mainul35.chatapp.enums.Role;
 import com.mainul35.chatapp.exception.UserAlreadyRegisteredException;
 import com.mainul35.chatapp.repository.RegistrationRepository;
 import com.mainul35.chatapp.viewmodel.Registration;
@@ -28,7 +28,7 @@ public class RegistrationService {
         var user = this.buildUser(registration);
         AuthUser savedUser = registrationRepository.save(user);
         // Write email sending logic
-        userVerificationService.sendRandomCodeToEmail(savedUser);
+        userVerificationService.generateAndSendActivationLink(savedUser);
     }
 
     private AuthUser buildUser(Registration registration) {

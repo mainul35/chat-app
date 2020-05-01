@@ -12,16 +12,17 @@ style="background-position: center; background-repeat: no-repeat; background-siz
 </noscript>
 
 <div id="username-page">
+    <h1>An account verification code has been sent to your email. Please submit the code and proceed to login.</h1>
     <div class="username-page-container">
-        <h1 class="title">Type your username</h1>
-        <form id="emailForm" name="usernameForm">
+        <h3 class="title">Verification code</h3>
+        <form id="emailForm" name="usernameForm" action="/public/submit-code" method="post">
             <div class="form-group">
                 <input type="text" id="name" placeholder="Verification Code"
                        autocomplete="off" class="form-control" name="verification-code" />
                 <input type="hidden" name="email" />
             </div>
             <div class="form-group">
-                <button type="submit" class="accent username-submit">Submit</button>
+                <button type="submit" class="accent verification-submit">Submit</button>
             </div>
         </form>
     </div>

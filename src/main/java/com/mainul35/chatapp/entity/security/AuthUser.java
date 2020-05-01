@@ -1,7 +1,7 @@
 package com.mainul35.chatapp.entity.security;
 
 import com.mainul35.chatapp.entity.BaseId;
-import com.mainul35.chatapp.entity.enums.Role;
+import com.mainul35.chatapp.enums.Role;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
