@@ -4,6 +4,7 @@ import com.mainul35.chatapp.entity.security.AuthUser;
 import com.mainul35.chatapp.exception.UserNotActiveException;
 import com.mainul35.chatapp.exception.UserNotFoundException;
 import com.mainul35.chatapp.repository.AuthRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -28,5 +29,10 @@ public class AuthService implements UserDetailsService {
         }
         //TODO: Add localization code
         throw  new UserNotActiveException("user.not.active");
+    }
+
+    public AuthUser getLoggedInUser() {
+        var user = (AuthUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return authRepository.findByEmailIgnoreCase(user.getEmail()).get();
     }
 }
