@@ -4,6 +4,7 @@ import com.mainul35.chatapp.entity.security.AuthUser;
 import com.mainul35.chatapp.entity.verification.UserVerification;
 import com.mainul35.chatapp.enums.VerificationGatewayType;
 import com.mainul35.chatapp.enums.VerificationType;
+import com.mainul35.chatapp.exception.VerificationFailureException;
 import com.mainul35.chatapp.repository.AuthRepository;
 import com.mainul35.chatapp.repository.UserVerificationRepository;
 import com.mainul35.chatapp.viewmodel.MailVerification;
@@ -37,10 +38,10 @@ public class UserVerificationService {
         Optional<UserVerification> userVerification = userVerificationRepository
                 .findByUserAndVerificationCodeAndVerificationGatewayType(user, mailVerification.getVerificationCode(),
                                                                         VerificationGatewayType.EMAIL);
-        if(userVerification.isPresent() && userVerification.get().getValidityTime().isAfter(LocalDateTime.now())) {
-            user.setEnabled(true);
-            authRepository.save(user);
-        }
+        if(!userVerification.isPresent() || !userVerification.get().getValidityTime().isAfter(LocalDateTime.now()))
+            throw new VerificationFailureException("invalid.verification.code");
+        user.setEnabled(true);
+        authRepository.save(user);
     }
 
     public UserVerification generateVerificationCode(AuthUser user) {
