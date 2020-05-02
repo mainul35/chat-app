@@ -1,15 +1,12 @@
 package com.mainul35.chatapp.config;
 
-import com.mainul35.chatapp.service.auth.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Configuration
@@ -35,10 +32,12 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
 
     private final AuthenticationProvider customAuthProvider;
     private final AuthenticationSuccessHandler authenticationSuccessHandler;
+    private final CustomAuthenticationFailureHandler authenticationFailureHandler;
 
-    public SecurityConfig(AuthenticationProvider customAuthProvider, AuthenticationSuccessHandler authenticationSuccessHandler) {
+    public SecurityConfig(AuthenticationProvider customAuthProvider, AuthenticationSuccessHandler authenticationSuccessHandler, CustomAuthenticationFailureHandler authenticationFailureHandler) {
         this.customAuthProvider = customAuthProvider;
         this.authenticationSuccessHandler = authenticationSuccessHandler;
+        this.authenticationFailureHandler = authenticationFailureHandler;
     }
 
     @Override
@@ -57,6 +56,7 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
                 .usernameParameter("email")
                 .passwordParameter("password")
                 .successHandler(authenticationSuccessHandler)
+                .failureHandler(authenticationFailureHandler)
                 .permitAll()
                 .and()
                 .logout()

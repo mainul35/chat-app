@@ -88,6 +88,7 @@
         };
 
         if (!invalidName && !invalidEmail && !invalidPassword && !invalidRePassword) {
+            window.localStorage.setItem("email", emailInput.val());
             submitForm(JSON.stringify(registration));
         } else {
             nameInput.trigger('blur');

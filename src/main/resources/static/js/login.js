@@ -49,6 +49,7 @@
         };
 
         if (!invalidEmail && !invalidPassword) {
+            window.localStorage.setItem("email", emailInput.val());
             loginForm.trigger("submit");
         } else {
             emailInput.trigger('blur');
