@@ -5,15 +5,16 @@ import com.mainul35.chatapp.entity.security.AuthUser;
 import com.mainul35.chatapp.enums.VerificationGatewayType;
 import com.mainul35.chatapp.enums.VerificationType;
 import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import java.time.LocalDateTime;
 
 @Entity
-@Builder
-@Getter
+@Data
 public class UserVerification extends BaseId {
     private VerificationGatewayType verificationGatewayType;
     private Integer verificationCode;
