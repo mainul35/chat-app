@@ -6,6 +6,9 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.time.OffsetDateTime;
 import java.util.Arrays;
 
@@ -20,10 +23,17 @@ public class ApplicationExceptionHandler {
     private final String UNAUTHORIZED = "UNAUTHORIZED";
 
     @ExceptionHandler(UserAlreadyRegisteredException.class)
-    public ResponseEntity<?> globalExceptionHandler(UserAlreadyRegisteredException ex, WebRequest request) {
+    public ResponseEntity<ErrorResponse> globalExceptionHandler(UserAlreadyRegisteredException ex, WebRequest request) {
         ErrorResponse errorResponse = new ErrorResponse(OffsetDateTime.now(), this.CONFLICT, ex.getMessage(), request.getDescription(false));
         printStackTrace(ex);
         return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(VerificationFailureException.class)
+    public void handleVerificationFailureException(VerificationFailureException e,
+                                                    HttpServletRequest request,
+                                                    HttpServletResponse response) throws IOException {
+        response.sendRedirect("/public/verification-failure");
     }
 
     private void printStackTrace(Exception ex) {

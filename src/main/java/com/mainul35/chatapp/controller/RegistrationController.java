@@ -2,11 +2,14 @@ package com.mainul35.chatapp.controller;
 
 import com.mainul35.chatapp.service.RegistrationService;
 import com.mainul35.chatapp.viewmodel.Registration;
+import com.mainul35.chatapp.viewmodel.ResponseObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class RegistrationController {
@@ -18,7 +21,7 @@ public class RegistrationController {
     }
 
     @GetMapping("/public/email-sent")
-    public String emailSent() {
+    public String emailSent(HttpServletRequest httpServletRequest) {
         return "email_sent";
     }
 }
@@ -33,8 +36,8 @@ class RegistrationRestController {
     }
 
     @PostMapping(value = "/register", produces = "application/json", consumes = "application/json")
-    public ResponseEntity<String> registrationHandler(@RequestBody Registration registration) {
+    public ResponseEntity<ResponseObject> registrationHandler(@RequestBody Registration registration) {
         registrationService.registerUser(registration);
-        return new ResponseEntity<String>("Success", HttpStatus.OK);
+        return new ResponseEntity<ResponseObject>(new ResponseObject(null, "Success"), HttpStatus.OK);
     }
 }
