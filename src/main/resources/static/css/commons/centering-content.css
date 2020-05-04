@@ -1,0 +1,13 @@
+body {
+    display: flex;
+}
+
+.main {
+    margin: auto;
+}
+
+.centered-container {
+    padding: 5%;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}

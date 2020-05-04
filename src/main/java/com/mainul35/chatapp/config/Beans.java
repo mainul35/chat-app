@@ -26,9 +26,4 @@ public class Beans {
         provider.setUserDetailsService(authService);
         return provider;
     }
-
-//    @Bean
-//    public JavaMailSender javaMailSender() {
-//        return new JavaMailSenderImpl();
-//    }
 }
