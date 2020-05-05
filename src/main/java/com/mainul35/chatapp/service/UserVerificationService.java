@@ -7,6 +7,7 @@ import com.mainul35.chatapp.enums.VerificationType;
 import com.mainul35.chatapp.exception.VerificationFailureException;
 import com.mainul35.chatapp.repository.AuthRepository;
 import com.mainul35.chatapp.repository.UserVerificationRepository;
+import com.mainul35.chatapp.viewmodel.CodeVerification;
 import com.mainul35.chatapp.viewmodel.MailVerification;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -33,10 +34,15 @@ public class UserVerificationService {
         sendVerificationCodeToEmail(user.getEmail(), generateVerificationCode(user));
     }
 
-    public void receiveVerificationCode(MailVerification mailVerification) {
-        AuthUser user = authRepository.findByEmailIgnoreCase(mailVerification.getEmail()).get();
+    public void generateAndSendActivationLink(String email) {
+        var user = authRepository.findByEmailIgnoreCase(email).get();
+        this.generateAndSendActivationLink(user);
+    }
+
+    public void receiveVerificationCode(CodeVerification verification) {
+        AuthUser user = authRepository.findByEmailIgnoreCase(verification.getEmail()).get();
         Optional<UserVerification> userVerification = userVerificationRepository
-                .findByUserAndVerificationCodeAndVerificationGatewayType(user, mailVerification.getVerificationCode(),
+                .findByUserAndVerificationCodeAndVerificationGatewayType(user, verification.getVerificationCode(),
                                                                         VerificationGatewayType.EMAIL);
         if(!userVerification.isPresent() || !userVerification.get().getValidityTime().isAfter(LocalDateTime.now()))
             throw new VerificationFailureException("invalid.verification.code");
@@ -52,13 +58,6 @@ public class UserVerificationService {
         verification.setGeneratedAt(LocalDateTime.now());
         verification.setVerificationType(VerificationType.ACCOUNT_ACTIVATION);
         verification.setUser(user);
-//                UserVerification.builder()
-//                        .verificationGatewayType(VerificationGatewayType.EMAIL)
-//                        .verificationCode(ThreadLocalRandom.current().nextInt(100000, 1000000))
-//                        .validityTime(LocalDateTime.now().plusDays(3))
-//                        .generatedAt(LocalDateTime.now())
-//                        .verificationType(VerificationType.ACCOUNT_ACTIVATION)
-//                        .user(user).build();
         return userVerificationRepository.save(verification);
     }
 

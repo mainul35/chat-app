@@ -10,10 +10,12 @@ import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 
 @Data
-public class MailVerification implements Serializable {
+public class CodeVerification implements Serializable {
+    @NotNull
+    private Integer verificationCode;
 
     @Email
-    @NotBlank(message = "Please enter your email address")
+    @NotBlank(message = "Associated email address with this code could not be found. Generate the code again")
     @Pattern(regexp = Patterns.EMAIL, message = "Invalid email address")
     private String email;
 }
