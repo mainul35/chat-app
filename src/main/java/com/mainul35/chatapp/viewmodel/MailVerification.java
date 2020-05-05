@@ -13,7 +13,7 @@ import java.io.Serializable;
 public class MailVerification implements Serializable {
 
     @Email
-    @NotBlank(message = "Associated email address with this code could not be found. Generate the code again")
+    @NotBlank(message = "Please enter your email address")
     @Pattern(regexp = Patterns.EMAIL, message = "Invalid email address")
     private String email;
 }
