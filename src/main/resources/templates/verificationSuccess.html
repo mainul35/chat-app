@@ -1,10 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>ChatApp</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/commons/bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/commons/floating-labels.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/commons/centering-content.css}"/>
 </head>
 <body>
-    <h1>Your account has been successfully verified.</h1>
+<div class="main">
+    <section>
+        <div class="container centered-container">
+            <div class="text-center">
+                <h3>Your account has been successfully verified.</h3>
+                <hr/>
+                <p>Click <a th:href="@{/login}">here</a> to go to the login page.</p>
+            </div>
+        </div>
+    </section>
+</div>
 </body>
 </html>

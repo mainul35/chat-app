@@ -14,13 +14,10 @@ import java.io.IOException;
 @Component
 public class CustomAuthenticationFailureHandler implements AuthenticationFailureHandler {
 
-    private final AuthRepository authRepository;
-
     private final UserVerificationService verificationService;
 
-    public CustomAuthenticationFailureHandler(UserVerificationService verificationService, AuthRepository authRepository) {
+    public CustomAuthenticationFailureHandler(UserVerificationService verificationService) {
         this.verificationService = verificationService;
-        this.authRepository = authRepository;
     }
 
     @Override
@@ -29,7 +26,7 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
                                         AuthenticationException e) throws IOException, ServletException {
         if(e.getMessage().equals("user_inactive")) {
             String email = httpServletRequest.getParameter("email");
-            verificationService.generateAndSendActivationLink(authRepository.findByEmailIgnoreCase(email).get());
+            verificationService.generateAndSendActivationLink(email);
             httpServletResponse.sendRedirect("/public/email-sent");
         }
     }

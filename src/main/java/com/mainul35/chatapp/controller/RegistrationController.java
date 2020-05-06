@@ -19,11 +19,6 @@ public class RegistrationController {
         model.addAttribute("registration", new Registration());
         return "register";
     }
-
-    @GetMapping("/public/email-sent")
-    public String emailSent(HttpServletRequest httpServletRequest) {
-        return "email_sent";
-    }
 }
 
 @RestController
