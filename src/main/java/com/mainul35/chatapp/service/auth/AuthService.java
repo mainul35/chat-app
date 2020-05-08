@@ -1,5 +1,6 @@
 package com.mainul35.chatapp.service.auth;
 
+import com.mainul35.chatapp.entity.security.AuthUser;
 import com.mainul35.chatapp.exception.UserNotActiveException;
 import com.mainul35.chatapp.exception.UserNotFoundException;
 import com.mainul35.chatapp.repository.AuthRepository;

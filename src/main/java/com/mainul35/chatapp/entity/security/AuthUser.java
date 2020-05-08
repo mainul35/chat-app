@@ -12,7 +12,9 @@ import javax.persistence.Enumerated;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Entity(name = "user_auth_details")
 public class AuthUser extends BaseId implements UserDetails, Serializable {
@@ -132,5 +134,15 @@ public class AuthUser extends BaseId implements UserDetails, Serializable {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public Map<String, Object> getUserDetails() {
+        Map<String, Object> userMap = new HashMap<>();
+        userMap.put("id", getId());
+        userMap.put("name", name);
+        userMap.put("email", email);
+        userMap.put("phone", phone);
+        userMap.put("username", username);
+        return userMap;
     }
 }

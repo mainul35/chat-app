@@ -1,7 +1,6 @@
 package com.mainul35.chatapp.controller;
 
 import com.mainul35.chatapp.service.UserVerificationService;
-import com.mainul35.chatapp.util.Patterns;
 import com.mainul35.chatapp.viewmodel.CodeVerification;
 import com.mainul35.chatapp.viewmodel.MailVerification;
 import org.springframework.stereotype.Controller;
